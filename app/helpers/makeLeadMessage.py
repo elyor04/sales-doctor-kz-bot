@@ -40,7 +40,7 @@ async def makeLeadMessage(leadId: dict):
     text = f"<b>Время</b>: {leadTime}\n\n"
 
     leadLink = CRM_BASE_URL + f"leads/detail/{lead['id']}"
-    text += f'<b>Сделка</b>: <a href="{leadLink}">{lead['name']}</a>\n\n'
+    text += f'<b>Сделка</b>: <a href="{leadLink}">{lead["name"]}</a>\n\n'
 
     text += f"<b>Отв-ный</b>: {user['name'] or ''}\n"
     text += f"<b>Бюджет</b>: {lead['price'] or ''}\n"
