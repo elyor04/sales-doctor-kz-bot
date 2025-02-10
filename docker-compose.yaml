@@ -1,0 +1,11 @@
+services:
+  app-bot:
+    image: python:3.12
+    container_name: sales-doctor-kz-bot
+    ports:
+      - "8087:8087"
+    restart: always
+    command: bash -c "pip3 install -r requirements.txt && python3 main.py"
+    working_dir: /app
+    volumes:
+      - .:/app
