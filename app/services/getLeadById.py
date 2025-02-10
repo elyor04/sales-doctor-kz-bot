@@ -4,7 +4,7 @@ from app.utils import crmClient
 async def getLeadById(id: int):
     response = await crmClient.get(
         f"api/v4/leads/{id}",
-        params={"with": "contacts"},
+        # params={"with": "contacts"},
     )
 
     if response.status == 200:

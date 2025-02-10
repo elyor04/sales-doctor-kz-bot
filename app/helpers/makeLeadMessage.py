@@ -9,11 +9,11 @@ async def makeLeadMessage(leadId: dict):
     user = await getUserById(lead["responsible_user_id"])
 
     custom_fields = lead.get("custom_fields_values", []) or []
-    contacts = lead.get("_embedded", {}).get("contacts", []) or []
-    companies = lead.get("_embedded", {}).get("companies", []) or []
+    # contacts = lead.get("_embedded", {}).get("contacts", []) or []
+    # companies = lead.get("_embedded", {}).get("companies", []) or []
 
-    contacts = [await getContactById(contact["id"]) for contact in contacts]
-    companies = [await getCompanyById(company["id"]) for company in companies]
+    # contacts = [await getContactById(contact["id"]) for contact in contacts]
+    # companies = [await getCompanyById(company["id"]) for company in companies]
 
     new_value = _getValue(custom_fields, "Новый")
     source_value = _getValue(custom_fields, "Источник")
@@ -31,7 +31,7 @@ async def makeLeadMessage(leadId: dict):
     paymentAmount_value = _getValue(custom_fields, "Сумма платежа")
     debit_value = _getValue(custom_fields, "Дебиторка")
     paymentType_value = _getValue(custom_fields, "Вид платежа")
-    cancelReason_value = _getValue(custom_fields, "Причина отказа")
+    # cancelReason_value = _getValue(custom_fields, "Причина отказа")
 
     contractDate = contractDate_value and datetime.fromtimestamp(contractDate_value).strftime("%d.%m.%Y")
     paymentDate = paymentDate_value and datetime.fromtimestamp(paymentDate_value).strftime("%d.%m.%Y")
@@ -61,37 +61,37 @@ async def makeLeadMessage(leadId: dict):
     text += f"<b>Сумма платежа</b>: {paymentAmount_value or ''}\n"
     text += f"<b>Дебиторка</b>: {debit_value or ''}\n"
     text += f"<b>Вид платежа</b>: {paymentType_value or ''}\n"
-    text += f"<b>Причина отказа</b>: {cancelReason_value or ''}\n\n"
+    # text += f"<b>Причина отказа</b>: {cancelReason_value or ''}\n\n"
 
-    for contact in contacts:
-        custom_fields = contact.get("custom_fields_values", []) or []
+    # for contact in contacts:
+    #     custom_fields = contact.get("custom_fields_values", []) or []
 
-        phone_value = _getValue(custom_fields, "Телефон")
-        email_value = _getValue(custom_fields, "Email")
-        position_value = _getValue(custom_fields, "Должность")
+    #     phone_value = _getValue(custom_fields, "Телефон")
+    #     email_value = _getValue(custom_fields, "Email")
+    #     position_value = _getValue(custom_fields, "Должность")
 
-        contactLink = CRM_BASE_URL + f"contacts/detail/{contact['id']}"
-        text += f'<b>Контакт</b>: <a href="{contactLink}">{contact['name']}</a>\n\n'
+    #     contactLink = CRM_BASE_URL + f"contacts/detail/{contact['id']}"
+    #     text += f'<b>Контакт</b>: <a href="{contactLink}">{contact['name']}</a>\n\n'
 
-        text += f"<b>Телефон</b>: {phone_value or ''}\n"
-        text += f"<b>Email</b>: {email_value or ''}\n"
-        text += f"<b>Должность</b>: {position_value or ''}\n\n"
+    #     text += f"<b>Телефон</b>: {phone_value or ''}\n"
+    #     text += f"<b>Email</b>: {email_value or ''}\n"
+    #     text += f"<b>Должность</b>: {position_value or ''}\n\n"
 
-    for company in companies:
-        custom_fields = company.get("custom_fields_values", []) or []
+    # for company in companies:
+    #     custom_fields = company.get("custom_fields_values", []) or []
 
-        phone_value = _getValue(custom_fields, "Телефон")
-        email_value = _getValue(custom_fields, "Email")
-        web_value = _getValue(custom_fields, "Web")
-        address_value = _getValue(custom_fields, "Адрес")
+    #     phone_value = _getValue(custom_fields, "Телефон")
+    #     email_value = _getValue(custom_fields, "Email")
+    #     web_value = _getValue(custom_fields, "Web")
+    #     address_value = _getValue(custom_fields, "Адрес")
 
-        companyLink = CRM_BASE_URL + f"companies/detail/{company['id']}"
-        text += f'<b>Компания</b>: <a href="{companyLink}">{company['name']}</a>\n\n'
+    #     companyLink = CRM_BASE_URL + f"companies/detail/{company['id']}"
+    #     text += f'<b>Компания</b>: <a href="{companyLink}">{company['name']}</a>\n\n'
 
-        text += f"<b>Телефон</b>: {phone_value or ''}\n"
-        text += f"<b>Email</b>: {email_value or ''}\n"
-        text += f"<b>Web</b>: {web_value or ''}\n"
-        text += f"<b>Адрес</b>: {address_value or ''}\n\n"
+    #     text += f"<b>Телефон</b>: {phone_value or ''}\n"
+    #     text += f"<b>Email</b>: {email_value or ''}\n"
+    #     text += f"<b>Web</b>: {web_value or ''}\n"
+    #     text += f"<b>Адрес</b>: {address_value or ''}\n\n"
 
     return text.strip()
 

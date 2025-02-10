@@ -6,11 +6,11 @@ from app.config import BOT_WEBHOOK
 router = APIRouter()
 
 
-@router.post(BOT_WEBHOOK)
+@router.post(f"/{BOT_WEBHOOK}")
 async def bot_webhook(request: Request):
     try:
         data = await request.json()
-    except ValueError:
+    except:
         raise HTTPException(status_code=400, detail="Invalid JSON")
 
     update = Update(**data)
