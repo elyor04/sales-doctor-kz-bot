@@ -4,7 +4,7 @@ from app.helpers import arrFind, arrGet
 from app.config import CRM_BASE_URL
 
 
-async def makeLeadMessage(leadId: dict):
+async def makeLeadMessage(leadId: int):
     lead = await getLeadById(leadId)
     user = await getUserById(lead["responsible_user_id"])
 
